@@ -1,0 +1,14 @@
+# dependências
+node_modules
+
+# builds e artefatos
+.next
+out
+*.tsbuildinfo
+
+# ambiente — nunca versionar segredos
+.env*
+!.env.example
+
+# sistema
+.DS_Store
