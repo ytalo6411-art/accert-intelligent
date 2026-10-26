@@ -21,7 +21,7 @@ export function gdeltUrl(customQuery:string,days:number){const raw=customQuery.t
  else phrases=defaultTerms.slice(0,MAX_PHRASES);
  const termPart=phrases.length>1?`(${phrases.join(' OR ')})`:phrases[0];
  const locPart=location?` "${location.replaceAll('"','').trim().slice(0,40)}"`:'';
- const u=new URL('https://api.gdeltproject.org/api/v2/doc/doc');u.searchParams.set('query',`${termPart}${locPart} (sourcelang:portuguese OR sourcelang:english)`);u.searchParams.set('mode','ArtList');u.searchParams.set('format','json');u.searchParams.set('maxrecords','75');u.searchParams.set('sort','DateDesc');u.searchParams.set('timespan',`${days} days`);return u.toString()}
+ const u=new URL('https://api.gdeltproject.org/api/v2/doc/doc');u.searchParams.set('query',`${termPart}${locPart} (sourcelang:portuguese OR sourcelang:english)`);u.searchParams.set('mode','ArtList');u.searchParams.set('format','json');u.searchParams.set('maxrecords','30');u.searchParams.set('sort','DateDesc');u.searchParams.set('timespan',`${days} days`);return u.toString()}
 /**
  * A GDELT devolve mensagens de erro em texto puro (ex.: rate limit
  * "Please limit requests to one every 5 seconds…"). Este parser separa
