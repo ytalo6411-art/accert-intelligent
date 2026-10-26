@@ -1,0 +1,1 @@
+import './globals.css';import type {Metadata} from 'next';export const metadata:Metadata={title:'Accert Intelligence | Radar comercial',description:'Inteligência comercial pública para engenharia e proteção contra incêndio.'};export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="pt-BR"><body>{children}</body></html>}

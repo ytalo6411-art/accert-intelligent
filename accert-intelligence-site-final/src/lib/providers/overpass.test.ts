@@ -1,0 +1,7 @@
+import {describe,expect,it} from 'vitest';
+import {normalizeOsmElements,overpassQuery} from './overpass';
+
+describe('OpenStreetMap/Overpass adapter',()=>{
+ it('requires municipality/UF and builds bounded, category-specific queries',()=>{const q=overpassQuery('Campinas','SP');expect(q).toContain('admin_level');expect(q).toContain('Campinas');expect(q).toContain('São Paulo');expect(q).toContain('out center 80');expect(()=>overpassQuery('','SP')).toThrow();const residential=overpassQuery('Campinas','SP','residential');expect(residential).toContain('apartments|residential|condominium|dormitory');expect(residential).not.toContain('["shop"]');expect(()=>overpassQuery('Campinas];(nwr','SP')).toThrow()});
+ it('labels mapped businesses and buildings as context, not active works',()=>{const rows=normalizeOsmElements({elements:[{type:'node',id:42,lat:-22.9,lon:-47.0,tags:{name:'Mercado de Bairro',shop:'supermarket',phone:'do-not-export'}},{type:'way',id:43,center:{lat:-22.91,lon:-47.01},tags:{building:'apartments','addr:street':'Rua Um'}}]},'Campinas','SP');expect(rows).toHaveLength(2);expect(rows[0].evidenceClass).toBe('C');expect(rows[0].status).toContain('não indica obra');expect(rows[0].description).not.toContain('phone');expect(rows[0].latitude).toBe(-22.9);expect(rows[0].url).toContain('/node/42');expect(rows[1].title).toBe('Edificação sem nome informado');expect(rows[1].address).toContain('Rua Um');expect(rows[1].confidence).toContain('mapped place only')});
+});
